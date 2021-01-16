@@ -7,6 +7,8 @@ import android.widget.Toast
 import com.codeart.core.SessionManager
 import com.codeart.core.UserRepository
 import com.codeart.dynamicfeature.databinding.ActivityHomeBinding
+import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+import com.google.android.play.core.splitinstall.SplitInstallRequest
 
 class HomeActivity : AppCompatActivity() {
 
@@ -30,10 +32,31 @@ class HomeActivity : AppCompatActivity() {
 
         binding.fab.setOnClickListener {
             try {
-                moveToChatActivity()
+                installChatModule()
             } catch (e: Exception){
                 Toast.makeText(this, "Module not found", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun installChatModule() {
+        val splitInstallManager = SplitInstallManagerFactory.create(this)
+        val moduleChat = "chat"
+        if (splitInstallManager.installedModules.contains(moduleChat)) {
+            moveToChatActivity()
+            Toast.makeText(this, "Open module", Toast.LENGTH_SHORT).show()
+        } else {
+            val request = SplitInstallRequest.newBuilder()
+                .addModule(moduleChat)
+                .build()
+            splitInstallManager.startInstall(request)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Success installing module", Toast.LENGTH_SHORT).show()
+                    moveToChatActivity()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error installing module", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 
