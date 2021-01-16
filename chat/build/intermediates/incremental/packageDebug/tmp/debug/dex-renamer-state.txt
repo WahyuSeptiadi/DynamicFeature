@@ -1,0 +1,4 @@
+#Sat Jan 16 13:22:46 ICT 2021
+base.0=C\:\\Users\\USER\\AndroidStudioProjects\\DynamicFeature\\chat\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

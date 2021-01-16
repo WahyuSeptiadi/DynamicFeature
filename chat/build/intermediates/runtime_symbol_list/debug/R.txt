@@ -1,0 +1,3 @@
+int id tv_chat 0x7e010000
+int layout activity_chat 0x7e020000
+int string chat_feature 0x7e030000
